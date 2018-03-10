@@ -16,17 +16,27 @@ RUN mkdir -p /usr/portage/gentoo && emerge-webrsync && emerge --sync && \
     echo "auto-sync = yes" >> /etc/portage/repos.conf/ros-overlay.conf && \
     echo "masters = gentoo" >> /etc/portage/repos.conf/ros-overlay.conf && \
     echo 'ACCEPT_KEYWORDS=~amd64' >> /etc/portage/make.conf && \
-    printf 'USE="X -bindist"\n' >> /etc/portage/make.conf && \
+    printf 'USE="X compat -bindist"\n' >> /etc/portage/make.conf && \
     eselect profile set default/linux/amd64/17.0/desktop && \
     emaint sync -r ros-overlay && \
     emerge --oneshot portage && \
-    echo "ros-*/* PYTHON_TARGETS: -* python2_7" >> /etc/portage/package.use/iputils && \
-    echo "ros-*/* PYTHON_SINGLE_TAGET: *- python2_7" >> /etc/portage/package.use/iputils && \
+    echo "ros-indigo/* PYTHON_TARGETS: -* python2_7" >> /etc/portage/package.use/iputils && \
+    echo "ros-indigo/* PYTHON_SINGLE_TAGET: *- python2_7" >> /etc/portage/package.use/iputils && \
+    echo "ros-kinetic/* PYTHON_TARGETS: -* python2_7" >> /etc/portage/package.use/iputils && \
+    echo "ros-kinetic/* PYTHON_SINGLE_TAGET: *- python2_7" >> /etc/portage/package.use/iputils && \
+    echo "ros-lunar/* PYTHON_TARGETS: -* python2_7" >> /etc/portage/package.use/iputils && \
+    echo "ros-lunar/* PYTHON_SINGLE_TAGET: *- python2_7" >> /etc/portage/package.use/iputils && \
+    echo "sys-libs/zlib minizip" >> /etc/portage/package.use/iputils && \
+    echo "sci-libs/vtk rendering java" >> /etc/portage/package.use/iputils && \
+    echo "dev-python/PyQt5 webkit" >> /etc/portage/package.use/iputils && \
+    echo "dev-qt/qtwebkit printsupport" >> /etc/portage/package.use/iputils && \
+    echo "dev-libs/boost python" >> /etc/portage/package.use/iputils && \
     perl-cleaner --reallyall && \
     emerge -C openssl && \
-    printf 'USE="${USE} fontconfig"\n' >> /etc/portage/make.conf && \
-    emerge openssl dev-libs/boost dev-util/cmake sys-devel/llvm-common \
-    dev-qt/qtchooser app-arch/cpio dev-libs/icu dev-util/ninja \
+    printf 'USE="${USE} fontconfig ruby_targets_ruby25"\n' >> \
+    /etc/portage/make.conf && \
+    emerge --jobs openssl dev-libs/boost dev-util/cmake sys-devel/llvm-common \
+    dev-qt/qtchooser dev-libs/icu dev-util/ninja \
     dev-python/nose dev-python/numpy dev-python/docutils \
     dev-python/ply dev-python/netifaces dev-python/ipaddress \
     dev-python/pycparser dev-util/meson dev-python/python-dateutil \
@@ -51,4 +61,17 @@ RUN mkdir -p /usr/portage/gentoo && emerge-webrsync && emerge --sync && \
     net-nds/openldap x11-proto/xf86vidmodeproto media-libs/openjpeg \
     x11-proto/xcb-proto x11-libs/xtrans x11-libs/libICE x11-libs/libSM \
     dev-libs/poco dev-libs/log4cxx dev-libs/apr-util app-arch/lz4 \
-    dev-python/pillow dev-python/paramiko dev-python/pynacl
+    dev-python/pillow dev-python/paramiko dev-python/pynacl dev-perl/Socket6 \
+    dev-perl/XML-NamespaceSupport dev-perl/HTTP-Negotiate \
+    dev-perl/HTTP-Cookies dev-perl/HTTP-Daemon dev-python/pycurl \
+    dev-python/sip dev-python/backports dev-python/subprocess32 \
+    dev-python/pytz dev-perl/WWW-RobotRules dev-perl/Tie-IxHash \
+    app-portage/gentoolkit x11-libs/libX11 media-libs/assimp \
+    dev-qt/qtxml x11-proto/kbproto x11-misc/util-macros \
+    x11-proto/inputproto x11-misc/util-macros dev-libs/tinyxml2 \
+    virtual/perl-IO-Socket-IP virtual/perl-Time-HiRes dev-perl/XML-XPath \
+    dev-perl/Text-Iconv dev-cpp/gtest dev-db/sqlite \
+    dev-lang/swig sys-libs/binutils-libs \
+    && rm -f /usr/portage/distfiles/*.tar* \
+    && rm -f /usr/portage/distfiles/*.zip* \
+    && rm -rf /var/tmp/portage/*; exit 0

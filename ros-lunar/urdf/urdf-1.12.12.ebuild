@@ -1,4 +1,4 @@
-# Copyright 2017 Open Source Robotics Foundation
+# Copyright 2018 Open Source Robotics Foundation
 # Distributed under the terms of the BSD license
 
 EAPI=6
@@ -14,10 +14,12 @@ SRC_URI="https://github.com/ros-gbp/${PN}-release/archive/release/lunar/${PN}/1.
 LICENSE="BSD"
 
 KEYWORDS="~x86 ~amd64 ~arm ~arm64"
+IUSE="test"
 RDEPEND="
 	ros-lunar/pluginlib
 	ros-lunar/rosconsole_bridge
 	ros-lunar/roscpp
+	test? ( ros-lunar/rostest )
 	dev-libs/urdfdom
 	dev-libs/urdfdom_headers
 	dev-libs/tinyxml
